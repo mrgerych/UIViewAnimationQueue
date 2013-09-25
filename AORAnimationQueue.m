@@ -32,14 +32,11 @@
 }
 
 - (void)addToQueueAnimation:(void (^)(void))animation andCompletion:(void (^)(void))completion{
-    @synchronized (self) {
-        AORAnimation *aorAnimation = [AORAnimation new];
-        aorAnimation.animation = animation;
-        aorAnimation.completion = completion;
-        [[self.class instance].animations addObject:aorAnimation];
-        [self startAnimation:aorAnimation];
-
-    }
+    AORAnimation *aorAnimation = [AORAnimation new];
+    aorAnimation.animation = animation;
+    aorAnimation.completion = completion;
+    [[self.class instance].animations addObject:aorAnimation];
+    [self startAnimation:aorAnimation];
 }
 
 - (void)startAnimation:(AORAnimation *)aorAnimation {
