@@ -12,6 +12,5 @@
 
 @property (nonatomic, copy) void (^animation)(void);
 @property (nonatomic, copy) void (^completion)(void);
-@property NSUInteger positionInQuea;
 
 @end

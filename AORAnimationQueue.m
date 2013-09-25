@@ -6,23 +6,22 @@
 //
 
 
-#import "AORAnimationQuering.h"
+#import "AORAnimationQueue.h"
 #import "AORAnimation.h"
 
 
-@implementation AORAnimationQuering {
+@implementation AORAnimationQueue {
 }
 - (id)init {
     self = [super init];
     if (self) {
         _animations = [NSMutableArray new];
     }
-
     return self;
 }
 
-+ (AORAnimationQuering *)instance {
-    static AORAnimationQuering *_instance = nil;
++ (AORAnimationQueue *)instance {
+    static AORAnimationQueue *_instance = nil;
 
     @synchronized (self) {
         if (_instance == nil) {
@@ -31,14 +30,13 @@
     }
     return _instance;
 }
-- (void) addToQuereAnimation:(void (^)(void)) animation andCompletion:(void (^)(void))completion{
+
+- (void)addToQueueAnimation:(void (^)(void))animation andCompletion:(void (^)(void))completion{
     @synchronized (self) {
         AORAnimation *aorAnimation = [AORAnimation new];
         aorAnimation.animation = animation;
         aorAnimation.completion = completion;
-        aorAnimation.positionInQuea = [self.class instance].animations.count;
         [[self.class instance].animations addObject:aorAnimation];
-        NSLog(@"quea %d",[self.class instance].animations.count);
         [self startAnimation:aorAnimation];
 
     }
@@ -47,15 +45,13 @@
 - (void)startAnimation:(AORAnimation *)aorAnimation {
     if ([[self.class instance].animations indexOfObject:aorAnimation] == 0){
         [UIView animateWithDuration:0.6 animations:aorAnimation.animation completion:^(BOOL finished) {
-            NSLog(@"completion %d",aorAnimation.positionInQuea);
             aorAnimation.completion();
-            if ([self.class instance].animations.count > aorAnimation.positionInQuea){
+            if ([self.class instance].animations.count > 1){
                 [[self.class instance].animations removeObject:aorAnimation];
                 [self startAnimation:[self.class instance].animations.firstObject];
             } else {
                 [[self.class instance].animations removeAllObjects];
             }
-
         }];
     }
 }

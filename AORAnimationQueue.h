@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 
-@interface AORAnimationQuering : NSObject
+@interface AORAnimationQueue : NSObject
 
-+ (AORAnimationQuering *)instance;
++ (AORAnimationQueue *)instance;
 
-- (void)addToQuereAnimation:(void (^)(void))animation andCompletion:(void (^)(void))completion;
+- (void)addToQueueAnimation:(void (^)(void))animation andCompletion:(void (^)(void))completion;
 
 @property NSMutableArray *animations;
 @end
